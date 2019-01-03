@@ -5,6 +5,7 @@
 <head>
 <meta charset="UTF-8">
 <title>포트폴리오</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
 <style>
 .container {
 	position:relative;
@@ -13,15 +14,17 @@
 nav {
 	position: absolute;
 	left: 0px;
-	width: 200px;
-	height : 500px;
-	background-color : red;
+	width: 10%;
+	height : 700px;
+	background-color : black;
 }
 
 section {
 	/* position is static by default */
-	margin-left: 200px;
-	background-color : blue;
+	width : 90%;
+	/* margin-left: 200px; */
+	margin-left : 10%;
+	/* background-color : blue; */
 	height : 700px;
 }
 
@@ -32,7 +35,7 @@ footer {
 	bottom: 0;
 	left: 0;
 	height: 70px;
-	width: 100%;
+	width : 100%;
 	background-color : yellow;
 }
 
@@ -44,20 +47,39 @@ header{
 	background-color : green;
 }
 </style>
-</head>
+<!-- <link rel = "stylesheet" href = "../bootstrap/css/bootstrap.min.css"/> -->
 
+
+
+</head>
 <body >
-<header>{NAME}'s HOME</header>
-	<div class = "container">
-		<nav>nav</nav>
+<script src = "http://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+<header><jsp:include page = "../template/header.jsp"/></header>
+		<nav>
+			<jsp:include page = "../template/nav.jsp"/>
+		</nav>
 		<section>
-			<jsp:include page = "main.jsp"/>
+			<jsp:include page = "${display}"/>
 		</section>
 		<footer>
-			fooetr
+			footer
 		</footer>
-	</div>
-
+<!-- <script src = "../bootstrap/js/bootstrap.min.js"></script> -->
+<script>
+	$(document).ready(function(){
+		/* $.get("json_test.do", function(data){
+		}, 'json').done(function(data){
+			console.log("응답 성공");
+			console.log(data);
+		}); */
+	});
+</script>
 </body>
 
 </html>
+
+
+
+
+

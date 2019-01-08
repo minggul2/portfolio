@@ -33,36 +33,25 @@ public class BoardController {
 	//리스트 생성 메소드
 	protected Map<String, Integer> boardListSize(int pg) {
 		Map<String, Integer> map = new HashMap<String, Integer>();
-		
-		//pg, startNum, endNum 필요
-		
-		//총사이즈
-		int totalSize = totalSize();
-		
-		/*
-		 * 	pg == 1 인 상황
-		 *  totalSize == 10이라면
-		 * 	
-		 * 	startNum = 10
-		 *  endNum = 6
-		 * 
-		 *  pg == 2 인 상황
-		 *  
-		 * 	startNum = 5
-		 *  edNum = 1
-		 * 
-		 * 
-		 * 
-		 */
 		int pageSize = 5;
-		//int blockSize = 3;
 		int endNum = pg * pageSize;  
 		int startNum = endNum - (pageSize - 1);
 		System.out.println("pg = " + pg + " startNum = " + startNum + " endNum = " + endNum);
 		map.put("startNum", startNum);
 		map.put("endNum", endNum);
-		
 		return map;
+	}
+	
+	//페이징 처리 메소드
+	protected String makePaging(int pg) {
+		BoardPaging bp = new BoardPaging();
+		bp.setPageSize(5);
+		bp.setTotalSize(totalSize());
+		bp.setPageBlock(3);
+		bp.setCurrentPage(pg);
+		bp.makePaging();
+		System.out.println(bp.getPaging());
+		return bp.getPaging().toString();
 	}
 	
 	//게시글 전체 목록 리턴
@@ -83,6 +72,7 @@ public class BoardController {
 		model.addAttribute("display", "/board/boardList.jsp");
 		model.addAttribute("pg", pg);
 		model.addAttribute("totalSize", totalSize());
+		model.addAttribute("paging", makePaging(pg));
 		return "/main/index";
 	}
 	

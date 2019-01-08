@@ -7,7 +7,7 @@
 	</insert>
 	
 	<select id = "getBoardList"  parameterType = "Map" resultType = "Map"> 
-		SELECT * FROM (SELECT ROWNUM RN, A.* FROM (SELECT * FROM BOARD)A WHERE ROWNUM <![CDATA[<=]]> #{endNum}) WHERE RN <![CDATA[>=]]> #{startNum}
+		SELECT * FROM (SELECT ROWNUM RN, A.* FROM (SELECT * FROM BOARD order by B_NO desc)A WHERE ROWNUM <![CDATA[<=]]> #{endNum}) WHERE RN <![CDATA[>=]]> #{startNum}
 	</select>
 	
 	<select id = "getBoardCount" resultType = "int">

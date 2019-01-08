@@ -4,7 +4,6 @@
 <a href = "boardWrite.do">글쓰기</a>
   <title>BBS List</title>
   <!-- Bootstrap -->
-  <link href="bootstrap-3.3.7/css/bootstrap.min.css" rel="stylesheet">
   <style>
     #container {
       width: 70%;
@@ -111,13 +110,12 @@
           </c:forEach>
         </tbody>
       </table>
-       
-      <!-- Paging 처리 -->
-      <div id="paging">
-        <%-- ${pageCode} --%>
-        test
-      </div>
-    </div>
+      <div id = "paging">
+		<ul class="pagination" style = "text-align : center;">
+			${paging}
+		</ul>
+	   </div>
+	</div>
   </div>
 
 

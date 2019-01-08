@@ -15,6 +15,6 @@ public class BoardDTO {
 	private String b_step;
 	private String b_indept;
 	private String b_inend;
-	private int hit;
-	private String logtime;
+	private int b_hit;
+	private String b_logtime;
 }

@@ -76,7 +76,7 @@
     </div>
      
     <div id="write">
-      <a href="/bbs/writeForm.bbs?pageNum=${pageNum}">글쓰기</a>
+      <a href="boardWrite.do">글쓰기</a>
     </div>
      
     <div>
@@ -98,7 +98,7 @@
                 <c:if test="${boardDTO.DEPTH > 0}">
                   &nbsp;&nbsp;
                 </c:if>
-                <a href="/bbs/content.bbs?articleNumber=${boardDTO.B_NO}&pg=${pg}">${boardDTO.B_SUBJECT}</a>
+                <a href="boardView.do?b_no=${boardDTO.B_NO}&pg=${pg}">${boardDTO.B_SUBJECT}</a>
                 <c:if test="${boardDTO.B_HIT >= 20}">
                   <span class="hit">hit!</span>
                 </c:if>

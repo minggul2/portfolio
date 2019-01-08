@@ -13,4 +13,6 @@ public interface BoardDAO {
 
 	int getboardCount();
 
+	BoardDTO getBoardOne(int b_no);
+
 }

@@ -6,10 +6,10 @@
 		INSERT INTO MEMBER VALUES (#{id}, #{name}, #{pwd})
 	</insert>
 	
-	<select id = "login" parameterType = "memberDTO" resultType = "boolean">
+	<select id = "login" parameterType = "memberDTO" resultType = "BOOLEAN">
 		SELECT 
-		(CASE WHEN count(*)>0 THEN 'TRUE' 
-							  ELSE 'FALSE' END) as boolean
+		(CASE WHEN count(*)>0 THEN 1
+							  ELSE 0 END) as BOOLEAN
 	  	FROM MEMBER WHERE ID = #{id} AND PWD = #{pwd}
 	</select>
 </mapper>

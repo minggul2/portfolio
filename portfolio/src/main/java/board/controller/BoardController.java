@@ -101,5 +101,15 @@ public class BoardController {
 		return "redirect:/board/boardList.do";
 	}
 	
+	//게시판 읽기
+	@RequestMapping(value="boardView.do", method=RequestMethod.GET)
+	public String boardView(@RequestParam int b_no, Model model) {
+		
+		BoardDTO boardDTO = boardDAO.getBoardOne(b_no);
+		
+		model.addAttribute("boardDTO", boardDTO);
+		model.addAttribute("display", "/board/boardView.jsp");
+		return "/main/index";
+	}
 	
 }

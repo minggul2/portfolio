@@ -28,5 +28,10 @@ public class BoardDAOMybatis implements BoardDAO{
 	public int getboardCount() {
 		return sqlSession.selectOne("boardSQL.getBoardCount");
 	}
+
+	@Override
+	public BoardDTO getBoardOne(int b_no) {
+		return sqlSession.selectOne("boardSQL.getBoardOne", b_no);
+	}
 	
 }

@@ -16,7 +16,7 @@
 	
 	<!-- dao -->
 	<context:component-scan base-package="member.dao"></context:component-scan>
-	
+	<context:component-scan base-package="board.dao"></context:component-scan>
 	
 	
 	<!-- sqlSessionFactory -->

@@ -69,7 +69,7 @@ public class MemberController {
 	//로그인 요청
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
 	public String login(@ModelAttribute MemberDTO memberDTO, Model model, BindingResult bindingResult, HttpSession httpSession) {
-		System.out.println("1" + memberDTO);
+		System.out.println("login.do : " + memberDTO);
 		System.out.println(checkId_Pwd(memberDTO));
 		
 		new MemberValidator().validate(memberDTO, bindingResult);
@@ -91,16 +91,16 @@ public class MemberController {
 	
 	//아이디, 비밀번호로 DB확인
 	protected boolean checkId_Pwd(MemberDTO memberDTO) {
-		System.out.println("2" + memberDTO);
+		System.out.println("checkId_Pwd : " + memberDTO);
 		return memberDAO.login(memberDTO);
 	}
 	
+	//로그아웃 요청
 	@RequestMapping(value="logout.do", method=RequestMethod.GET)
 	public String logout(HttpSession httpSession) {
 		httpSession.invalidate();
 		return "redirect:/main/index.do";
 	}
-	
 	
 		
 		

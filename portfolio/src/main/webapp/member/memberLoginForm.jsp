@@ -12,6 +12,8 @@
 			<td>
 				<form:input path = "id" type = "text" placeholder = "아이디" name = "id" id = "id" class = "form-control"/>
 				<form:errors path = "id" cssClass = "errorMessage"/>
+				<!-- <div id = "id_div"></div> -->
+				<!-- 클라이언트 측 유효성 검사 -->
 			</td>
 		</tr>
 		<tr>

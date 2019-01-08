@@ -1,0 +1,115 @@
+package board.controller;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.http.HttpSession;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+
+import board.bean.BoardDTO;
+import board.dao.BoardDAO;
+
+@RequestMapping("/board/*")
+@Controller
+public class BoardController {
+	
+	@Autowired
+	private BoardDAO boardDAO;
+	
+	@ModelAttribute("boardDTO")
+	public Object fromBack() throws Exception {
+		return new BoardDTO();
+	}
+	
+	//리스트 생성 메소드
+	protected Map<String, Integer> boardListSize(int pg) {
+		Map<String, Integer> map = new HashMap<String, Integer>();
+		
+		//pg, startNum, endNum 필요
+		
+		//총사이즈
+		int totalSize = totalSize();
+		
+		/*
+		 * 	pg == 1 인 상황
+		 *  totalSize == 10이라면
+		 * 	
+		 * 	startNum = 10
+		 *  endNum = 6
+		 * 
+		 *  pg == 2 인 상황
+		 *  
+		 * 	startNum = 5
+		 *  edNum = 1
+		 * 
+		 * 
+		 * 
+		 */
+		int pageSize = 5;
+		//int blockSize = 3;
+		int endNum = pg * pageSize;  
+		int startNum = endNum - (pageSize - 1);
+		System.out.println("pg = " + pg + " startNum = " + startNum + " endNum = " + endNum);
+		map.put("startNum", startNum);
+		map.put("endNum", endNum);
+		
+		return map;
+	}
+	
+	//게시글 전체 목록 리턴
+	protected int totalSize() {
+		return boardDAO.getboardCount();
+	}
+	
+	//게시판 목록
+	@RequestMapping("boardList.do")
+	public String boardList(@RequestParam(required=false, defaultValue="1") int pg, Model model) {
+		
+		System.out.println(boardListSize(pg));
+		
+		List<Map<String, String>> board_list = null;
+		board_list = boardDAO.getBoardList(boardListSize(pg));
+		System.out.println(board_list);
+		model.addAttribute("board_list", board_list);
+		model.addAttribute("display", "/board/boardList.jsp");
+		model.addAttribute("pg", pg);
+		model.addAttribute("totalSize", totalSize());
+		return "/main/index";
+	}
+	
+	//게시판 글쓰기
+	@RequestMapping(value="boardWrite.do", method=RequestMethod.GET)
+	public String boardWrite(Model model) {
+		
+		model.addAttribute("display", "/board/boardWrite.jsp");
+		return "/main/index";
+	}
+	
+	//게시판 글등록 요청
+	@RequestMapping(value="boardWrite.do", method=RequestMethod.POST)
+	public String boardWrite(@ModelAttribute BoardDTO boardDTO, BindingResult bindingResult, Model model, HttpSession httpSession) {
+		//DB 접속필요
+		System.out.println(boardDTO);
+		
+		boardDTO.setB_id((String)httpSession.getAttribute("id"));
+		new BoardValidator().validate(boardDTO, bindingResult);
+		if(bindingResult.hasErrors()) {
+			System.out.println("에러남-");
+			model.addAttribute("display", "/board/boardWrite.jsp");
+			return "/main/index";
+		}
+		boardDAO.board_insert(boardDTO);	
+		return "redirect:/board/boardList.do";
+	}
+	
+	
+}

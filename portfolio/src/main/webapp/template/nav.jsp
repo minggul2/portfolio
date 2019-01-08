@@ -40,7 +40,7 @@
 				<li><a href="#">마이페이지</a></li>
 			</c:if>		
 			<li><a href="#">출석체크</a></li>
-			<li><a href="#">게시판</a></li>
+			<li><a href="../board/boardList.do">게시판</a></li>
 			<li><a href="#">단어</a></li>
 		</ul>
 	</div>

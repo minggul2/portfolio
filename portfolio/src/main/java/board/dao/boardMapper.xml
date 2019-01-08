@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="boardSQL"><!--매퍼의 이름  -->
+	<insert id = "board_insert" parameterType = "boardDTO">
+		INSERT INTO BOARD VALUES (board_seq.nextval, #{id}, #{subject}, #{contents}, 0, sysdate)
+	</insert>
+	
+	<select id = "getBoardList"  parameterType = "Map" resultType = "Map"> 
+		SELECT * FROM (SELECT ROWNUM RN, A.* FROM (SELECT * FROM BOARD)A WHERE ROWNUM <![CDATA[<=]]> #{endNum}) WHERE RN <![CDATA[>=]]> #{startNum}
+	</select>
+	
+	<select id = "getBoardCount" resultType = "int">
+		SELECT COUNT(*) FROM BOARD
+	</select>
+</mapper>

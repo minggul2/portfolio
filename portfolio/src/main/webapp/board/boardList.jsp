@@ -95,7 +95,7 @@
             <tr>
               <td>${boardDTO.B_NO}</td>
               <td id="title">
-                <c:if test="${boardDTO.DEPTH > 0}">
+                <c:if test="${boardDTO.step > 0}">
                   &nbsp;&nbsp;
                 </c:if>
                 <a href="boardView.do?b_no=${boardDTO.B_NO}&pg=${pg}">${boardDTO.B_SUBJECT}</a>

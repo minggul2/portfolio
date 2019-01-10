@@ -112,4 +112,22 @@ public class BoardController {
 		return "/main/index";
 	}
 	
+	@RequestMapping(value="boardReply.do", method=RequestMethod.GET)
+	public String boardReplyForm(Model model) {
+		model.addAttribute("display", "/board/boardWrite.jsp");
+		return "/main/index";
+	}
+	
+	@RequestMapping(value="boardReply.do", method=RequestMethod.POST)
+	public String boardReply(@ModelAttribute BoardDTO boardDTO, Model model, HttpSession httpSession, @RequestParam(defaultValue="1", required=false) int pg,
+								@RequestParam int b_no) {
+		BoardDTO parentBoardDTO = boardDAO.getBoardOne(b_no);
+		
+		
+		boardDTO.setB_id((String)httpSession.getAttribute("id"));
+		boardDAO.board_insert(boardDTO);
+		
+		model.addAttribute("display", "/board/boardList.jsp?pg="+pg);
+		return "/main/index";
+	}
 }

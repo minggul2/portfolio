@@ -73,6 +73,7 @@
               <input type="button" value="삭제하기" disabled="disabled">
             </c:if> --%>
             <input type="button" value="목록으로" onclick="document.location.href='/bbs/list.bbs?pageNum=${pageNum}'">
+            <input type="button" value = "답글작성" onclick = "location.href= 'boardReply.do'">
           </td>
         </tr>
          

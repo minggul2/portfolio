@@ -8,7 +8,7 @@
     #container {
       width: 70%;
       margin: 0 auto;     /* 가로로 중앙에 배치 */
-      padding-top: 10%;   /* 테두리와 내용 사이의 패딩 여백 */
+      padding-top: 3%;   /* 테두리와 내용 사이의 패딩 여백 */
     }
      
     #list {
@@ -95,8 +95,11 @@
             <tr>
               <td>${boardDTO.B_NO}</td>
               <td id="title">
-                <c:if test="${boardDTO.step > 0}">
-                  &nbsp;&nbsp;
+                <c:if test="${boardDTO.B_LEV > 0}">
+                	<c:forEach begin="1" end ="${boardDTO.B_LEV}">
+                		&emsp;
+                	</c:forEach>
+                	<img src = "../image/reply.gif">
                 </c:if>
                 <a href="boardView.do?b_no=${boardDTO.B_NO}&pg=${pg}">${boardDTO.B_SUBJECT}</a>
                 <c:if test="${boardDTO.B_HIT >= 20}">

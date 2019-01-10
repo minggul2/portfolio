@@ -2,12 +2,12 @@
 <!DOCTYPE mapper  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="boardSQL"><!--매퍼의 이름  -->
-	<insert id = "board_insert" parameterType = "boardDTO">
+	<insert id = "insertBoard" parameterType = "boardDTO">
 		INSERT INTO BOARD VALUES (board_seq.nextval, #{b_id}, #{b_subject}, #{b_contents}, board_seq.currval, 0, 0, 0, 0, sysdate)
 	</insert>
 	
 	<select id = "getBoardList"  parameterType = "Map" resultType = "Map"> 
-		SELECT * FROM (SELECT ROWNUM RN, A.* FROM (SELECT * FROM BOARD order by B_NO desc)A WHERE ROWNUM <![CDATA[<=]]> #{endNum}) WHERE RN <![CDATA[>=]]> #{startNum}
+		SELECT * FROM (SELECT ROWNUM RN, A.* FROM (SELECT * FROM BOARD order by B_REF DESC, B_STEP ASC)A WHERE ROWNUM <![CDATA[<=]]> #{endNum}) WHERE RN <![CDATA[>=]]> #{startNum}
 	</select>
 	
 	<select id = "getBoardCount" resultType = "int">
@@ -17,4 +17,42 @@
 	<select id = "getBoardOne" parameterType = "int" resultType = "boardDTO">
 		SELECT * FROM BOARD WHERE B_NO = #{b_no}
 	</select>
+	
+	<update id = "updateStep" parameterType = "boardDTO">
+		UPDATE BOARD SET B_STEP = B_STEP + 1 WHERE B_REF = #{b_ref} AND B_STEP > #{b_step}
+	</update>
+	
+	<insert id = "insertReply" parameterType = "boardDTO">
+		INSERT INTO BOARD VALUES(
+								board_seq.nextval,
+								#{b_id},
+								#{b_subject},
+								#{b_contents},
+								#{b_ref},
+								#{b_lev}+1,
+								#{b_step}+1,
+								#{b_pno},
+								0,
+								sysdate
+								)		
+	</insert>
+	
+	<insert id = "insertCmt" parameterType = "commentDTO">
+		INSERT INTO COMMENTS VALUES(
+								#{b_no},
+								comments_seq.nextval,
+								#{m_id},
+								#{c_contents},
+								comments_seq.currval,
+								#{c_lev},
+								#{c_step},
+								sysdate
+								)
+	</insert>
+	
+	<select id = "getCmtList" parameterType = "int" resultType = "commentDTO">
+		SELECT * FROM COMMENTS WHERE B_NO = #{B_NO}
+	</select>
+	
+	
 </mapper>	

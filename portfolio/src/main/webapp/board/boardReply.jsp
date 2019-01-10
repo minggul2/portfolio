@@ -11,7 +11,7 @@
 </style>
 
 <div id = "container">
-<form:form modelAttribute = "boardDTO" method = "POST">
+<form:form modelAttribute = "boardDTO" action = "boardReply.do" method = "POST">
 	<input type = "hidden" name = "b_no" value = "${b_no}">
 	<table>
 		<tr>

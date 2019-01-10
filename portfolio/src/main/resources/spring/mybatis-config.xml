@@ -4,5 +4,6 @@
 	<typeAliases>
 		<typeAlias type ="member.bean.MemberDTO" alias="memberDTO"/>
 		<typeAlias type ="board.bean.BoardDTO" alias="boardDTO"/>
+		<typeAlias type ="board.bean.CommentDTO" alias = "commentDTO"/>
 	</typeAliases>
 </configuration>

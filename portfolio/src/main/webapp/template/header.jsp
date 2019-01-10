@@ -16,7 +16,13 @@
 </style>
 
 <div class = "tab profile">
-	{NAME}'s HOME	
+	<c:if test = "${sessionScope.id == null}">
+		Guest
+	</c:if>
+	<c:if test = "${sessionScope.id != null}">
+		환영합니다<br>
+		${sessionScope.id}
+	</c:if>
 </div>
 <div class = "tab">
 	test	

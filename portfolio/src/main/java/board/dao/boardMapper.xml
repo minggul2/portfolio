@@ -3,7 +3,7 @@
 
 <mapper namespace="boardSQL"><!--매퍼의 이름  -->
 	<insert id = "board_insert" parameterType = "boardDTO">
-		INSERT INTO BOARD VALUES (board_seq.nextval, #{b_id}, #{b_subject}, #{b_contents}, 0, 0, 0, 0, 0, sysdate)
+		INSERT INTO BOARD VALUES (board_seq.nextval, #{b_id}, #{b_subject}, #{b_contents}, board_seq.currval, 0, 0, 0, 0, sysdate)
 	</insert>
 	
 	<select id = "getBoardList"  parameterType = "Map" resultType = "Map"> 
@@ -17,4 +17,4 @@
 	<select id = "getBoardOne" parameterType = "int" resultType = "boardDTO">
 		SELECT * FROM BOARD WHERE B_NO = #{b_no}
 	</select>
-</mapper>
+</mapper>	

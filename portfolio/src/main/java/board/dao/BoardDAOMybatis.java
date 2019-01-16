@@ -17,7 +17,7 @@ public class BoardDAOMybatis implements BoardDAO{
 	
 	@Override
 	public void insertBoard(BoardDTO boardDTO) {
-		sqlSession.insert("boardSQL.board_insert", boardDTO);
+		sqlSession.insert("boardSQL.insertBoard", boardDTO);
 	}
 
 	@Override

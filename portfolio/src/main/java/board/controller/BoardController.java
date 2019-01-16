@@ -79,10 +79,14 @@ public class BoardController {
 	
 	//게시판 글쓰기
 	@RequestMapping(value="boardWrite.do", method=RequestMethod.GET)
-	public String boardWrite(Model model) {
+	public String boardWrite(Model model, HttpSession httpSession) {
 		
-		model.addAttribute("display", "/board/boardWrite.jsp");
-		return "/main/index";
+		if(httpSession.getAttribute("id") == null) {
+			return "redirect:/member/login.do";
+		}else {
+			model.addAttribute("display", "/board/boardWrite.jsp");
+			return "/main/index";
+		}
 	}
 	
 	//게시판 글등록 요청
@@ -93,6 +97,7 @@ public class BoardController {
 		boardDTO.setB_id((String)httpSession.getAttribute("id"));
 		new BoardValidator().validate(boardDTO, bindingResult);
 		if(bindingResult.hasErrors()) {
+			System.out.println(bindingResult.getFieldErrors());
 			System.out.println("에러남-");
 			model.addAttribute("display", "/board/boardWrite.jsp");
 			return "/main/index";

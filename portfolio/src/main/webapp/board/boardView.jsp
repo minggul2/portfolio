@@ -4,9 +4,9 @@
 
 <style>
 	#container {
-      width: 70%;
+      /* width: 70%; */
       margin: 0 auto;     /* 가로로 중앙에 배치 */
-      padding-top: 3%;   /* 테두리와 내용 사이의 패딩 여백 */
+      /* padding-top: 3%; */   /* 테두리와 내용 사이의 패딩 여백 */
     }
     
     th{
@@ -129,11 +129,31 @@
 
 <script>
 	$(document).ready(function(){
+		
+		//댓글 리스트 불러오기
 		$.ajax({
 			type : 'POST', url : 'cmtList.do', data : {'b_no' : $('#b_no').val()}, dataType : 'json',
 			success : function(data){
 				cmtMaker(data.cmtList);
 			}
+		});
+		
+		
+		
+		$('#commentWrite').click(function(){
+			$.ajax({
+				type : 'POST',
+				url : 'cmtWrite.do',
+				data : {'c_contents' : $('#cmtContents').val(), 'b_no' : $('#b_no').val()},
+				dataType : 'json',
+				success : function(data){
+					//댓글 작성 성공하면 코맨트 div에 추가해줘야함
+					cmtMaker(data.cmtList);
+				},
+				error : function(){
+					alert("실패");	
+				}
+			});
 		});
 		
 		function cmtMaker(data){
@@ -151,22 +171,6 @@
 			$("#cmtContents").val("");
 	        $("#cmtContents").focus();
 		}
-		
-		$('#commentWrite').click(function(){
-			$.ajax({
-				type : 'POST',
-				url : 'cmtWrite.do',
-				data : {'c_contents' : $('#cmtContents').val(), 'b_no' : $('#b_no').val()},
-				dataType : 'json',
-				success : function(data){
-					//댓글 작성 성공하면 코맨트 div에 추가해줘야함
-					cmtMaker(data.cmtList);
-				},
-				error : function(){
-					alert("실패");	
-				}
-			});
-		});
 	})
 	
 </script>

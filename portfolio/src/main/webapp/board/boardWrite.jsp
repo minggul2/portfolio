@@ -4,15 +4,14 @@
 
 <style>
 #container {
-      width: 70%;
+      /* width: 70%; */
       margin: 0 auto;     /* 가로로 중앙에 배치 */
-      padding-top: 10%;   /* 테두리와 내용 사이의 패딩 여백 */
+      /* padding-top: 10%; */   /* 테두리와 내용 사이의 패딩 여백 */
     }
 </style>
 
 <div id = "container">
 <form:form modelAttribute = "boardDTO" method = "POST">
-	<input type = "hidden" name = "b_no" value = "${b_no}">
 	<table>
 		<tr>
 			<th colspan = "2" style = "text-align : center;"><h3>Board Write</h3></th>
@@ -42,5 +41,6 @@
 		$('#writeBtn').click(function(){
 			$('#boardDTO').submit();
 		});
+		
 	});
 </script>

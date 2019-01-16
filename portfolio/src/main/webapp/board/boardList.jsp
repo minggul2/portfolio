@@ -6,9 +6,9 @@
   <!-- Bootstrap -->
   <style>
     #container {
-      width: 70%;
+      /* width: 70%; */
       margin: 0 auto;     /* 가로로 중앙에 배치 */
-      padding-top: 3%;   /* 테두리와 내용 사이의 패딩 여백 */
+      /* padding-top: 3%; */   /* 테두리와 내용 사이의 패딩 여백 */
     }
      
     #list {
@@ -42,7 +42,7 @@
      
     .hit {
       animation-name: blink;
-      animation-duration: 1.5s;
+      animation-duration: 2s;
       animation-timing-function: ease;
       animation-iteration-count: infinite;
       /* 위 속성들을 한 줄로 표기하기 */
@@ -62,14 +62,7 @@
   </style>
   <div id="container">
     <div align="right">
-      <!-- Login 검증 -->
-      <!-- jstl의 if문은 else가 없어서 따로 검증해야함. -->
-      <c:if test="${id != null}">
-        <%-- <%@include file="loginOk.jsp" %> --%>
-      </c:if>
-      <c:if test="${id == null}">
-        <%-- <%@include file="login.jsp" %> --%>
-      </c:if>
+      
     </div>
     <div id="list">
       <b>게시판 (전체 글: ${totalSize})</b>
@@ -99,10 +92,10 @@
                 	<c:forEach begin="1" end ="${boardDTO.B_LEV}">
                 		&emsp;
                 	</c:forEach>
-                	<img src = "../image/reply.gif">
+                	<img src = "/resources/img/reply.gif">
                 </c:if>
                 <a href="boardView.do?b_no=${boardDTO.B_NO}&pg=${pg}">${boardDTO.B_SUBJECT}</a>
-                <c:if test="${boardDTO.B_HIT >= 20}">
+                <c:if test="${boardDTO.B_HIT >= 0}">
                   <span class="hit">hit!</span>
                 </c:if>
               </td>
@@ -120,5 +113,6 @@
 	   </div>
 	</div>
   </div>
+
 
 

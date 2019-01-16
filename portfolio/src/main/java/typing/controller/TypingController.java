@@ -15,7 +15,7 @@ public class TypingController {
 	@RequestMapping(value="kr.do", method=RequestMethod.GET)
 	public String kr(Model model) {
 		
-		String q_sentence = "테스트 입니다.";
+		String q_sentence = "가방을 메고";
 		int q_length = q_sentence.length();
 		
 		model.addAttribute("q_length", q_length);
@@ -26,7 +26,19 @@ public class TypingController {
 	
 	//답안지 검사 요청
 	@RequestMapping(value="answer.do", method=RequestMethod.POST)
-	public @ResponseBody ModelAndView answer(@RequestParam String user_answer, @RequestParam String answer, @RequestParam double spd) {
+	public @ResponseBody ModelAndView answer(@RequestParam String user_answer,
+											@RequestParam String answer,
+											@RequestParam double spd,
+											@RequestParam int err,
+											@RequestParam int typing) {
+		
+		System.out.println("에러 : " + err);
+		System.out.println("정답 : " + typing);
+		//타수 구하기
+		double tasu = (typing  / spd) * 60;
+		
+		System.out.println(tasu);
+		
 		ModelAndView mav = new ModelAndView();
 		System.out.println(user_answer);
 		

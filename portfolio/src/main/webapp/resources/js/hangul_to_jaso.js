@@ -1,0 +1,3 @@
+jaso = function(text){
+	
+}

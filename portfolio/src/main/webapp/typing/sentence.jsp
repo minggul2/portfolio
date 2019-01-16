@@ -67,38 +67,12 @@ div#seqspan{
 		var timerIsNotRunning = true;	//타이머 상태체크 변수
 		
 		var typing = 0;		//타이핑[i] == 문제글[i] 일경우 증가
-		
-		var inputLength = 1;	//기준 답 길이
-		var inputLengthNow;		//실시간 사용자 답 길이
-		
 		var red = 0;	//오답카운트
-		
-		
-		
-				
 		
 		$(document).on('keydown', '#inputbox', function(key){	//키 입력 이벤트
 			var acc;	//정확도 변수
 			
 			//TypingController에게 시간 정보를 보내주어야함
-			
-			inputLengthNow = $(this).val().length;
-			console.log('기준 인덱스 : ' + inputLength);
-			console.log('답변 인덱스 : ' + inputLengthNow);
-			
-			if((inputLength - inputLengthNow) != 1){
-				if($(this).val().substr(inputLength - 1, 1) == $('#seqspan').text().substr(inputLength - 1, 1)){
-					typing++;
-					console.log('같음');
-				}else{
-					red++;	
-					console.log('오답');
-					console.log($(this).val().substr(inputLength - 1, 1));
-					console.log($('#seqspan').text().substr(inputLength - 1, 1));
-				}
-				inputLength++;
-			}
-			
 			
 			
 			//1. 타이핑 시 스탑워치 작동
@@ -106,15 +80,47 @@ div#seqspan{
 				timerIsNotRunning = false;
 				
 				timer = setInterval(function(){
-					spd += 0.1;
-					//console.log(spd.toFixed(1));
-				}, 100);//밀리세컨드초
+					spd += 0.01;
+					console.log(spd.toFixed(2));
+				}, 10);//0.01초
 			}
 			
+			var redArr = new Array();	//에러 글자 배열
 			
 			if (key.keyCode == 13) {
 				//2. 타이핑 완료 시 스탑워치 작동중지
 				clearInterval(timer);
+				var answer = $('#seqspan').text();
+				var user_answer = $('#inputbox').val();
+				
+
+				console.log(answer.length);
+				for(var i = 0; i < answer.length; i++){
+					if(answer[i] == user_answer[i]){
+						console.log('같음 : ' + answer[i]);	
+						typing++;
+					}else{
+						console.log('다름 : ' + answer[i]);	
+						console.log('다름 : ' + user_answer[i]);
+						
+						var redData = new Object();		//에러 객체 생성
+						redData.index = i;
+						redData.value = user_answer[i];
+						
+						//redArr.push(redData);
+						redArr[i] = redData;
+						
+						red++;
+					}
+				}
+				
+				$.each(redArr, function(index, items){
+					console.log(items);
+				});
+				
+				//JSON 객체 완성
+				var redJson = JSON.stringify(redArr);
+				
 				
 				
 				$.ajax({
@@ -123,16 +129,20 @@ div#seqspan{
 					data : {
 							'user_answer' : $('#inputbox').val(),
 							'answer' : $('#seqspan').text(),
-							'spd' : spd.toFixed(1)
+							'spd' : spd.toFixed(2),
+							'err' : red,
+							'typing' : typing
 							},
 					dataType : 'JSON',
 					success : function(data) {
-						console.log('최종 속도 : ' + spd.toFixed(1));
+						console.log('최종 속도 : ' + spd.toFixed(2));
 						console.log('최종 타이핑 : ' + typing);
 						console.log('최종 오답 : ' + red);
-						timerIsNotRunning = true;
-						spd = 0;
-						$('#seqspan').text(data.q_sentence);
+						timerIsNotRunning = true;			//타이머 초기화
+						alert(spd.toFixed(2));
+						spd = 0;							//속도 초기화
+						$('#seqspan').text(data.q_sentence);//새로운 문제 넣기
+						redArr = new Array();	//오타 배열 초기화
 					}
 				}); 
 				$('#inputbox').val('');
